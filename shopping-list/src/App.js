@@ -26,14 +26,13 @@ const App = () => {
       if (
         await offlineStorage.items.add({
           name: itemName,
-          checked: 'false'
+          checked: 'off'
         }).then((insertedId) => {
-          console.log('inserted');
           return true;
         })
       ) {
-        console.log('inserted');
         setItemName('');
+        renderItems();
       } else {
         alert('Failed to save item');
       }
@@ -58,19 +57,53 @@ const App = () => {
       alert('failed to reset');
     })
   }
+  
+  const checkItem = (item, checked) => {
+    offlineStorage.transaction('rw', offlineStorage.items, async() => {
+      if (
+        await offlineStorage.items.put({
+          id: item.id,
+          name: item.name,
+          checked,
+        }).then((insertedId) => {
+          return true;
+        })
+      ) {
+        renderItems();
+      } else {
+        alert('Failed to update tag information');
+      }
+    })
+    .catch(e => {
+      alert('Failed to update tag information');
+      console.log('tag info', e);
+    });
+  }
 
-  useEffect(() => {
-    if (items) {
-      console.log(items);
-    }
-  }, [items]);
+  const deleteItem = (item) => {
+    offlineStorage.transaction('rw', offlineStorage.items, () => {
+      offlineStorage.items.where("id").equals(item.id).delete().then((deleteCount) => {
+        if (deleteCount) {
+          renderItems();
+        }
+      })
+    })
+    .catch(e => {
+      alert('Failed to delete item');
+      console.log('delete item', e);
+    });
+  }
 
   useEffect(() => {
     if (offlineStorage) renderItems();
   }, [offlineStorage]);
  
   useEffect(() => {
-    if (!offlineStorage) setupOfflineStorage();
+    if (!offlineStorage) {
+      setupOfflineStorage();
+    } else {
+      renderItems();
+    }
   }, []);
 
   return (
@@ -80,7 +113,13 @@ const App = () => {
         <input type="text" placeholder="item name" value={itemName} onChange={(e) => setItemName(e.target.value)}/>
       </div>
       <div className="App__body">
-
+        {items.map((item, index) => (
+          <div key={index} className="App__body-row">
+            <input type="checkbox" checked={item.checked === "on"} onChange={(e) => checkItem(item, e.target.value)}/>
+            <p>{item.name}</p>
+            <button type="button" onClick={(e) => deleteItem(item)}>X</button>
+          </div>
+        ))}
       </div>
       <button className="reset-btn" type="button" onClick={(e) => resetDb()}>Reset</button>
     </div>
