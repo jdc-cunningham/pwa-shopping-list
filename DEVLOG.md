@@ -16,3 +16,6 @@ Takes about 10 minutes for `npx create-react-app app-name` to run
 
 forgot how to use `workbox-cli`
 
+`npx workbox-cli` maybe
+
+missing this `workbox-config.js` file, referenced from calorie counter app
