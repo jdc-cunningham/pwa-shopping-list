@@ -34,7 +34,6 @@ const App = () => {
       ) {
         console.log('inserted');
         setItemName('');
-        renderItems();
       } else {
         alert('Failed to save item');
       }
@@ -65,6 +64,10 @@ const App = () => {
       console.log(items);
     }
   }, [items]);
+
+  useEffect(() => {
+    if (offlineStorage) renderItems();
+  }, [offlineStorage]);
  
   useEffect(() => {
     if (!offlineStorage) setupOfflineStorage();
