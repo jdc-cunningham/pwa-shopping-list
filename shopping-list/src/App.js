@@ -121,7 +121,9 @@ const App = () => {
           </div>
         ))}
       </div>
-      <button className="reset-btn" type="button" onClick={(e) => resetDb()}>Reset</button>
+      <div className="App__bottom-nav">
+        <button className="reset-btn" type="button" onClick={(e) => resetDb()}>Reset</button>
+      </div>
     </div>
   );
 }
