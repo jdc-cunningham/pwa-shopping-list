@@ -115,7 +115,7 @@ const App = () => {
       <div className="App__body">
         {items.map((item, index) => (
           <div key={index} className="App__body-row">
-            <input type="checkbox" checked={item.checked === "on"} onChange={(e) => checkItem(item, e.target.value)}/>
+            <input type="checkbox" value={item.checked === "on"} onChange={(e) => checkItem(item, !e.target.value)}/>
             <p>{item.name}</p>
             <button type="button" onClick={(e) => deleteItem(item)}>X</button>
           </div>

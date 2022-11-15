@@ -1,4 +1,15 @@
-6:44 PM
+11/14/2022 7:48 PM
+
+I used this today and it had problems ha, but worked
+I also want to switch it to dark mode
+
+- overflow issue
+- unable to uncheck
+- dark mode
+
+doing this on PBP
+
+11/31/2022 6:44 PM
 
 Note: I had flatpak wayland chrome open during this, 9 tabs open, soundcloud playing in one of them
 
